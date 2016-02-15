@@ -1,22 +1,29 @@
+body {
+  overflow-y: hidden;
+  text-align: center;
+}
+
+.gameMode {
+  background: black;
+}
+
+.answer-select {
+  height: 70vh;
+}
+
+.row-margin {
+  margin: 5px 0;
+}
+
 button {
-  width: 100%;
-  height: 25vh;
-  border: none;
+  border: 10px solid white;
+  border-radius: 3px;
+  width: 48%;
+  height: 48%; 
 }
 
-#answer1 {
-  background: pink;
+.playerName, button {
+  color: white;
 }
 
-#answer2 {
-  background: aquamarine;
-}
-
-#answer3 {
-  background: yellow;
-}
-
-#answer4 {
-  background: skyblue;
-}
 
