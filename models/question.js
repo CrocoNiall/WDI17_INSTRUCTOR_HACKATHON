@@ -8,8 +8,7 @@ var QuestionSchema = new Schema({
 	options: [{
 	    type: Schema.Types.ObjectId,
 	    ref: 'Answer'
-	  }],
- 	answer: Schema.Types.ObjectId
+	}]
 
 });
 
