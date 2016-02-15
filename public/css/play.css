@@ -11,3 +11,7 @@ ul {
 li {
   padding: 1em;
 }
+
+button {
+  font-size: 24px;
+}

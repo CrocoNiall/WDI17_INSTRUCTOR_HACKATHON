@@ -18,25 +18,34 @@ var playerCount = 1
 
 io.on('connection', function(socket){
 
-  	console.log('**********************User Connected' + socket.id)
+  console.log('**********************User Connected' + socket.id)
 
-	 socket.on('hit buzzer' , function(user){
-	          console.log(user.name + " wants to answer");
+  socket.on('hit buzzer', function(user){
+  	// console.log(user.name + " wants to answer");
+    var turnAlert = user.name + " has buzzed!"
+    io.emit('turn alert', turnAlert);
+  })
 
-	 })
-
+  socket.on('answer submit', function(submittedAnswer){
+    console.log(submittedAnswer);
+    var emitGuess = {
+      user: submittedAnswer.user,
+      guessId: submittedAnswer.id
+    };
+    // checkAnswer();
+    io.emit('user guess', emitGuess)
+  })
+  	
 	socket.on('join game', function(user){
-	    console.log('trying to connect to the game....')
+    console.log('trying to connect to the game....')
 
-	    io.emit('newUser', {id: socket.id, playerNo: playerCount, name: "Player " + playerCount});
-	    playerCount++;
-
+    io.emit('newUser', {id: socket.id, playerNo: playerCount, name: "Player " + playerCount});
+    playerCount++;
 	})
   
-
-	socket.on('joinGame', function(data){
-		console.log(msg);
-	});
+  function checkAnswer() {
+    // Fake answer
+  }
 
 });
 
