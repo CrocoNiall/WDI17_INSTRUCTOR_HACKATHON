@@ -7,7 +7,7 @@ var Question = require('../models/question.js');
 router.get('/questions', function(req,res){
 
 	Question.findRandom()
-	.limit(5)
+	.limit(15)
 	.populate('options')
 	.exec(function (err, data) {
   
