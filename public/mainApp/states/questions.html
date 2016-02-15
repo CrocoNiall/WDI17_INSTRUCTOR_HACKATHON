@@ -14,6 +14,7 @@
 	<div class="row" ng-show="controller.playerBuzzed">
 		<div class="col-xs-12">
 			<h3>{{controller.playerBuzzed.name}} to play!!</h3>
+			<i class="fa fa-5x" ng-show="controller.correct != null" ng-class="{'fa-thumbs-up' : controller.correct , 'fa-thumbs-down' : !controller.correct}"></i>
 		</div>
 	</div>
 
