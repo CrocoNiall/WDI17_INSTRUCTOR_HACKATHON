@@ -54,13 +54,12 @@ function QuestionController($scope, $state, $timeout, Question) {
 
 			self.current++;
 			self.question = self.questions[self.current];
-
 			socket.emit('next question');
 
 		} else {
 
 			socket.emit('game over');
-			$state.go('leaderboard')
+			$state.go('leaderboard');
 
 		}
 
