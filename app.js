@@ -2,14 +2,10 @@ var express     = require('express');
 var app         = express();
 var port        = process.env.PORT || 3000;
 var router      = express.Router();
-var http        = require('http').Server(app);
-
-var routes     = require('./routes/routes');
-
-var bodyParser  = require('body-parser');
-var morgan      = require('morgan');
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var routes      = require('./routes/routes')
+var http        = require('http').createServer(app)
+var bodyParser  = require('body-parser')
+var morgan      = require('morgan')
 
 io.on('connection', function(socket){
   console.log('a user connected');
@@ -20,7 +16,12 @@ io.on('connection', function(socket){
 
   })
 
-});
+io.on('connection', function(socket){
+  console.log('someone has connected')
+  socket.on('joinGame', function(data){
+    console.log(msg)
+  })
+})
 
 
 // set the view engine to ejs
