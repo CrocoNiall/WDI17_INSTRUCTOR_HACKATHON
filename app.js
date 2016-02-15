@@ -61,6 +61,10 @@ io.on('connection', function(socket){
     io.emit('masterStartGame', {})
   })
 
+  socket.on('next question', function() {
+    io.emit('resetGame', "Next question, get ready!")
+  })
+
 });
 
 // set the view engine to ejs

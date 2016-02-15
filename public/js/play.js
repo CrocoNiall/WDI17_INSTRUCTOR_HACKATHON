@@ -20,6 +20,10 @@ $(document).ready(function() {
     // toggleButtons()
   })
 
+  socket.on('next question', function(data) {
+    console.log(data);
+  })
+
   function toggleButtons() {
     $(".answer-option").prop("disabled", function(index, currentValue) { 
       return !currentValue; 
