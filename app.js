@@ -30,6 +30,7 @@ io.on('connection', function(socket){
   })
 
   socket.on('answer submit', function(submittedAnswer){
+    console.log(submittedAnswer)
     if (submittedAnswer.player.playerNo === playerToAnswer.playerNo) {
       var emitGuess = {
         user: submittedAnswer.player,

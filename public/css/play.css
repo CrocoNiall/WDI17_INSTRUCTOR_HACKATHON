@@ -1,17 +1,22 @@
-body {
-  width: 70%;
-  margin: 0 auto;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  padding: 1em;
-}
-
 button {
-  font-size: 24px;
+/*  width: 100%;
+  height: 25vh;*/
+  border: none;
 }
+
+#answer1 {
+  background: pink;
+}
+
+#answer2 {
+  background: aquamarine;
+}
+
+#answer3 {
+  background: yellow;
+}
+
+#answer4 {
+  background: skyblue;
+}
+

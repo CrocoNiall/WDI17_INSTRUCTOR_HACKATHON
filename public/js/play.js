@@ -28,7 +28,7 @@ $(document).ready(function() {
     // var answer;
     selectedAnswer.id = $(answer.target).data("question-id");
     selectedAnswer.player = player;
-    toggleButtons();
+    // toggleButtons();
     socket.emit('answer submit', selectedAnswer);
   }
   
@@ -54,6 +54,10 @@ $(document).ready(function() {
 
   socket.on('turn alert', function(turnAlert) {
     console.log(turnAlert)
+    // toggleButtons();
+  })
+
+  socket.on('disable buttons', function() {
     toggleButtons();
   })
   
