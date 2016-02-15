@@ -2,6 +2,7 @@ var express     = require('express');
 var app         = express();
 var port        = process.env.PORT || 3000;
 var router      = express.Router();
+
 var routes      = require('./routes/routes');
 var api			= require('./routes/api');
 var questionCrud= require('./routes/crud/questions');
@@ -13,17 +14,29 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/buzz');
 
+var playerCount = 1
 
 io.on('connection', function(socket){
-  console.log('someone has connected');
 
-  socket.on('hit buzzer' , function(user){
-  		console.log(user.name + " wants to answer");
-  })
+  	console.log('**********************User Connected' + socket.id)
 
-  socket.on('joinGame', function(data){
-    	console.log(msg);
-  });
+	 socket.on('hit buzzer' , function(user){
+	          console.log(user.name + " wants to answer");
+
+	 })
+
+	socket.on('join game', function(user){
+	    console.log('trying to connect to the game....')
+
+	    io.emit('newUser', {id: socket.id, playerNo: playerCount, name: "Player " + playerCount});
+	    playerCount++;
+
+	})
+  
+
+	socket.on('joinGame', function(data){
+		console.log(msg);
+	});
 
 });
 
@@ -43,5 +56,6 @@ app.use('/admin/questions' , questionCrud);
 
 app.use(express.static(__dirname + '/public'));
 
-http.listen(port);
-console.log('Server started on port ' + port + '...');
+http.listen(port)
+console.log('Server started on port ' + port + '…')
+

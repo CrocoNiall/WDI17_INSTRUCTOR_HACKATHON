@@ -1,5 +1,6 @@
 angular.module('game').controller('questionController', QuestionController);
 
+QuestionController.$inject = ['Question'];
 function QuestionController(Question) {
 
 	var self = this;
