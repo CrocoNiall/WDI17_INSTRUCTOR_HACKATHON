@@ -1,23 +1,19 @@
-<div class="container" ng-controller="questionController as controller">
+<div id="question" class="container vertical-center" ng-controller="questionController as controller">
 	<div class="row">
 		<div class="col-xs-12">
 			<header>
-				<h1>{{controller.question.question}}</h1>
-				<h2>{{controller.question.title}}</h2>
-				<h3>{{controller.question.category}}</h3>
+				<h2>{{controller.question.question}}</h2>
 			</header>
 
-			<main>
-				<ul>
-					<li ng-class="{selected: controller.guess==$index}" ng-repeat="option in controller.question.options">{{ option.title }}</li>
-				</ul>
+			<main id="answers" class="text-center">
+					<div ng-class="{selected: controller.guess==$index}" class="button" ng-repeat="option in controller.question.options">{{ option.title }}</div>
 			</main>
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="row" ng-show="controller.playerBuzzed">
 		<div class="col-xs-12">
-			<p>{{controller.playerBuzzed}}</p>
+			<h3>{{controller.playerBuzzed.name}} to play!!</h3>
 		</div>
 	</div>
 
