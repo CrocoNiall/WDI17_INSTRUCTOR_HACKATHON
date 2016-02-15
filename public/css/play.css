@@ -22,7 +22,7 @@ button {
   height: 48%; 
 }
 
-.playerName, button {
+.message, .playerName, button {
   color: white;
 }
 

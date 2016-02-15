@@ -62,7 +62,8 @@ io.on('connection', function(socket){
   })
 
   socket.on('next question', function() {
-    io.emit('resetGame', "Next question, get ready!")
+    console.log("next question!")
+    io.emit('reset turn', "Next question, get ready!")
   })
 
 });
