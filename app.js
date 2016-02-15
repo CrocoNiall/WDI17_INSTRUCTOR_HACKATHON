@@ -10,7 +10,6 @@ var morgan      = require('morgan')
 var ejs         = require('ejs')
 var io          = require('socket.io')(http)
 
-
 app.use(morgan('dev'))
 
 //set out view engine
@@ -28,9 +27,11 @@ app.use('/',  routes)
 
 io.on('connection', function(socket){
   console.log('someone has connected')
+
   socket.on('joinGame', function(data){
     console.log(msg)
   })
+  
 })
 
 
