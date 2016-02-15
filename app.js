@@ -12,7 +12,7 @@ var morgan      = require('morgan')
 var io = require('socket.io')(http);
 var mongoose = require('mongoose');
 
-mongoose.connect(process.ENV.MONGOLAB_URI || 'mongodb://localhost/buzz');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/buzz');
 
 var playerCount = 1
 var clients = {}
