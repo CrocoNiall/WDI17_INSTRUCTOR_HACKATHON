@@ -1,1 +1,1 @@
-angular.module('game', [])
+angular.module('game', ['ngResource'])

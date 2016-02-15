@@ -16,6 +16,10 @@ router.get('/startgame', function(req,res){
  res.render('mainApp/index.ejs')
 })
 
+router.get('/question', function(req,res){
+ res.render('mainApp/question.ejs')
+})
+
 
 
 
