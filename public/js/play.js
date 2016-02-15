@@ -116,7 +116,7 @@ $(document).ready(function() {
       clickedAnswer.removeClass("selected");
     }
     // console.log("trying to remove selectedClass from" + clickedAnswer)
-    allowShake == true;
+    allowShake = true;
   })
   
   function connectToGame(){
