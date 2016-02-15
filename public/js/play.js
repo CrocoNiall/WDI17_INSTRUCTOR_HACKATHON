@@ -1,5 +1,6 @@
 $(document).ready(function() {
   
+  var user = {}
   // Init stuff
   var selectedAnswer = {};
   // set up the socket connection
@@ -8,13 +9,15 @@ $(document).ready(function() {
   registerAnswerListener();
 
   socket.on('setname', function(data){
-    playerName = data.name
-    playerNo = data.playerNo
-    console.log('i am ' + playerName)
+    user.name = data.name
+    user.playerNumber = data.playerNo
+    console.log('i am ' + user.name)
   })
+
 
   socket.on('masterStartGame', function(data){
     console.log('The master is starting the game....')
+    toggleButtons()
   })
 
   function toggleButtons() {
@@ -35,10 +38,7 @@ $(document).ready(function() {
     socket.emit('answer submit', selectedAnswer);
   }
   
-  // user object TBC
-  var user = {
-  	name:"steve"
-  }
+
 
   // set up the shake listener
   var myShakeEvent = new Shake({
@@ -60,9 +60,13 @@ $(document).ready(function() {
   	socket.emit('hit buzzer', user);  
   }
 
-  socket.on('turn alert', function(turnAlert) {
-    console.log(turnAlert)
-    toggleButtons();
+  socket.on('turn alert', function(data) {
+    console.log('Someone has buzzed ' + data.name)
+    console.log(data.playerNumber, user.playerNumber)
+    if (data.no != user.playerNumber){
+      console.log('toggeling buttons')
+      toggleButtons();
+    } 
   })
   
   function connectToGame(){

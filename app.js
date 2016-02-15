@@ -22,9 +22,11 @@ io.on('connection', function(socket){
   console.log('**********************User Connected' + socket.id)
 
   socket.on('hit buzzer', function(user){
-  	// console.log(user.name + " wants to answer");
-    var turnAlert = user.name + " has buzzed!"
+    var turnAlert = {name: user.name, no: user.playerNumber}
     io.emit('turn alert', turnAlert);
+
+    console.log(user.name + '   buzzed!!!!!')
+
   })
 
   socket.on('answer submit', function(submittedAnswer){
@@ -37,10 +39,11 @@ io.on('connection', function(socket){
   })
   	
   socket.on('join game', function(user){
+    clients[socket.id] = socket
     io.emit('newUser', {id: socket.id, playerNo: playerCount, name: "Player " + playerCount});
 
     var recip = clients[socket.id]
-    socket.emit('setname', {name: 'Player' + playerCount, playerNo: playerCount})
+    recip.emit('setname', {name: 'Player' + playerCount, playerNo: playerCount})
     playerCount++
   })
   
