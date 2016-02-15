@@ -1,1 +1,13 @@
-<h1>Leaderboard</h1>
+<div id="leaderboard" class="container vertical-center" ng-controller="leaderboardController as controller">
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<h1>Game Over!!</h1>
+			<ul>
+				<li ng-repeat="player in controller.players">
+					<i class="fa fa-user"></i> {{player.name}} - {{ player.score }}
+				</li>
+			</ul>
+		</div>
+	</div>
+
+</div>

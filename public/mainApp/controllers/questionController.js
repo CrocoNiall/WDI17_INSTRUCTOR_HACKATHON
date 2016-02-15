@@ -1,7 +1,7 @@
 angular.module('game').controller('questionController', QuestionController);
 
-QuestionController.$inject = ['$scope', '$state' , '$timeout', 'Question'];
-function QuestionController($scope, $state, $timeout, Question) {
+QuestionController.$inject = ['$scope', '$state' , '$timeout', 'Question' , 'Game'];
+function QuestionController($scope, $state, $timeout, Question , Game) {
 
 	var self = this;
 	self.current = 0;
@@ -34,7 +34,10 @@ function QuestionController($scope, $state, $timeout, Question) {
 	  	// check for correct answer
 	  	self.correct = self.question.options[self.guess].isCorrect;
 
-	  	console.log(self.question.options[self.guess]);
+	  	// update the score
+	  	Game.updateScore(data.user.playerNo , self.correct);
+
+	  	console.log(Game.getPlayer(data.user.playerNo));
 
 	  	// update the angular watcher
 	  	$scope.$apply();

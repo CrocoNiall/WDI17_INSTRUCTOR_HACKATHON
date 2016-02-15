@@ -1,11 +1,11 @@
-<div id="lobby">
+<div id="lobby" ng-controller="lobbyController as lobby">
 	<div class="row vertical-center">
 	  	<div class="col-xs-12 text-center">
 			<h1>Waiting for playaaas</h1>
-			<button class="button" ng-click='game.startGame()' ui-sref='questions'>START THE GAME</button>
+			<button class="button" ng-click='lobby.startGame()' ui-sref='questions'>START THE GAME</button>
 			<ul>
-			  <li ng-repeat='user in game.users track by $index'>
-			  <i class="fa fa-user"></i> {{user.name}} has joined</li>
+			  <li ng-repeat='player in lobby.players track by $index'>
+			  <i class="fa fa-user"></i> {{player.name}} has joined</li>
 			</ul>
 		</div>
 	</div>
