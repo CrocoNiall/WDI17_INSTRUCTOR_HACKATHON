@@ -8,6 +8,9 @@ function GameService() {
 
 		 this.players.push(player); 
 
+		 var speechString = 'Player ' + player.playerNo + ' joined.'
+		 setTimeout(function(){ responsiveVoice.speak(speechString, "US English Female",  {rate: 1}); }, 1000)
+
 	}
 
 	this.getPlayer = function(id) {

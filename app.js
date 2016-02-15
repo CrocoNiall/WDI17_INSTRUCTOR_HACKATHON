@@ -27,6 +27,7 @@ io.on('connection', function(socket){
     var turnAlert = {name: player.playerName, no: player.playerNo}
     io.emit('turn alert', turnAlert);
     console.log(player.playerName + '   buzzed!!!!!')
+    
 
   })
 

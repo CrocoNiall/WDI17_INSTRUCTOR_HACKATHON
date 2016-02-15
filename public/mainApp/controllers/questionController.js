@@ -29,7 +29,8 @@ function QuestionController($scope, $state, $timeout, Question) {
 	var socket  = io()
 
 	socket.on('turn alert', function(data){
-	  
+	  	console.log(data.no)
+	  	responsiveVoice.speak('Player ' + data.no, "US English Female",  {rate: 1})
 	  	self.playerBuzzed = data;
 	  	$scope.$apply();
 
