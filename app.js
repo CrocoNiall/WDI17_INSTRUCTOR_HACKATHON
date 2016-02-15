@@ -2,17 +2,23 @@ var express     = require('express');
 var app         = express();
 var port        = process.env.PORT || 3000;
 var router      = express.Router();
-var http        = require('http').Server(app);
 
-var routes     = require('./routes/routes');
-
-var bodyParser  = require('body-parser');
-var morgan      = require('morgan');
-var http = require('http').Server(app);
+var routes      = require('./routes/routes');
+var api			= require('./routes/api');
+var questionCrud= require('./routes/crud/questions');
+var http        = require('http').createServer(app)
+var bodyParser  = require('body-parser')
+var morgan      = require('morgan')
 var io = require('socket.io')(http);
+var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/buzz');
+
+var playerCount = 1
 
 io.on('connection', function(socket){
-  console.log('a user connected');
+
+  console.log('**********************User Connected' + socket.id)
 
   socket.on('hit buzzer', function(user){
   	// console.log(user.name + " wants to answer");
@@ -23,14 +29,20 @@ io.on('connection', function(socket){
   socket.on('answer submit', function(submittedAnswer){
     console.log(submittedAnswer);
     var emitGuess = {
-      userGuess: submittedAnswer.user + " guessed answer " + submittedAnswer.id,
-      correctAnswer: "3" 
+      user: submittedAnswer.user,
+      guessId: submittedAnswer.id
     };
     // checkAnswer();
-
     io.emit('user guess', emitGuess)
   })
+  	
+	socket.on('join game', function(user){
+    console.log('trying to connect to the game....')
 
+    io.emit('newUser', {id: socket.id, playerNo: playerCount, name: "Player " + playerCount});
+    playerCount++;
+	})
+  
   function checkAnswer() {
     // Fake answer
   }
@@ -48,8 +60,11 @@ app.use(bodyParser.urlencoded({ extended:false }))
 
 app.use(router);
 app.use('/',  routes);
+app.use('/api' , api);
+app.use('/admin/questions' , questionCrud);
 
 app.use(express.static(__dirname + '/public'));
 
 http.listen(port)
-console.log('Server started on port ' + port + '...')
+console.log('Server started on port ' + port + '…')
+

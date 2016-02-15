@@ -1,0 +1,17 @@
+<div class="container" ng-controller="questionController as controller">
+	<div class="row">
+		<div class="col-xs-12">
+			<header>
+				<h1>{{controller.question.question}}</h1>
+				<h2>{{controller.question.title}}</h2>
+				<h3>{{controller.question.category}}</h3>
+			</header>
+
+			<main>
+				<ul>
+					<li ng-repeat="option in controller.question.options">{{ option.answer }}</li>
+				</ul>
+			</main>
+		</div>
+	</div>
+</div>
