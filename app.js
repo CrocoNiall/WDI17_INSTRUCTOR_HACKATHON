@@ -14,11 +14,26 @@ var io = require('socket.io')(http);
 io.on('connection', function(socket){
   console.log('a user connected');
 
-  socket.on('hit buzzer' , function(user){
-
-  		console.log(user.name + " wants to answer");
-
+  socket.on('hit buzzer', function(user){
+  	// console.log(user.name + " wants to answer");
+    var turnAlert = user.name + " has buzzed!"
+    io.emit('turn alert', turnAlert);
   })
+
+  socket.on('answer submit', function(submittedAnswer){
+    console.log(submittedAnswer);
+    var emitGuess = {
+      userGuess: submittedAnswer.user + " guessed answer " + submittedAnswer.id,
+      correctAnswer: "3" 
+    };
+    // checkAnswer();
+
+    io.emit('user guess', emitGuess)
+  })
+
+  function checkAnswer() {
+    // Fake answer
+  }
 
 });
 
