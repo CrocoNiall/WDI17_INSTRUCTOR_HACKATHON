@@ -11,14 +11,23 @@ var morgan      = require('morgan');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var playerCount = 1
+
 io.on('connection', function(socket){
-  console.log('a user connected');
+  console.log('**********************User Connected' + socket.id)
 
   socket.on('hit buzzer' , function(user){
-
           console.log(user.name + " wants to answer");
 
   })
+
+  socket.on('join game', function(user){
+    console.log('trying to connect to the game....')
+
+    io.emit('newUser', {id: socket.id, playerNo: playerCount, name: "Player " + playerCount});
+    playerCount++
+  })
+  
 
 });
 

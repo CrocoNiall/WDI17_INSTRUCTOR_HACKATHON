@@ -3,7 +3,7 @@ $(document).ready(function() {
   
   // user object TBC
   var user = {
-  	"name":"steve"
+  	name:"steve"
   }
 
   // set up the shake listener
@@ -14,6 +14,13 @@ $(document).ready(function() {
 
   // set up the socket connection
   var socket = io();
+
+  connectToGame()
+
+
+
+
+  // socket.emit('newUser', user)
 
   // start listening for shakes
   myShakeEvent.start();
@@ -29,4 +36,10 @@ $(document).ready(function() {
       
   }
   
+
+
+function connectToGame(){
+  console.log('joining game....')
+  socket.emit('join game', user)
+}
 })

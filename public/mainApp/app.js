@@ -16,6 +16,10 @@ function MainRouter($stateProvider, $urlRouterProvider){
     url: "/leaderboard",
     templateUrl: "/mainApp/states/leaderboard.html",
   })
+  .state('questions', {
+    url: "/questions",
+    templateUrl: "/mainApp/states/questions.html",
+  })
 
 
   $urlRouterProvider.otherwise('/');
