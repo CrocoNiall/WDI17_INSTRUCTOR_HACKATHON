@@ -1,12 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var Question = require('../../models/question.js');
+var Answer = require('../../models/answer.js');
 
 // ***************SHOW ALL***************
 router.get('/', function(req,res){
  
-	Question.find({} , function(err,data){
-
+	Question.find({})
+	.populate('options')
+	.exec(function (err, data) {
+	 
 		res.send(data);
 
 	});
@@ -23,19 +26,34 @@ router.get('/new', function(req,res){
 // ***************CREATE***************
 router.get('/create', function(req,res){
  
- 	var question = new Question(
- 		{
- 			title:'Question 1', 
- 			question:'What are we doing here',
- 			category:"Sport"
- 		});
+ 	Answer.create([{
+ 					title:"Answer 1",
+ 					isCorrect: false
+ 				},{
+ 					title:"Answer 2",
+ 					isCorrect: false
+ 				},{
+ 					title:"Answer 3",
+ 					isCorrect: true
+ 				},{
+ 					title:"Answer 1",
+ 					isCorrect: false
+ 				}] , function(err , answers){
+ 					
+ 					var question = Question.create(
+ 						{
+ 							title:'Question 1', 
+ 							question:'What are we doing here',
+ 							category:"Sport",
+ 							options: answers
+ 						} , function(err, question){
+ 							res.send(question);
+ 						});
 
- 	question.save(function(){
 
- 		res.send('Question Created');
+ 						
 
- 	});
-
+ 				});
 });
 
 // ***************EDIT***************
