@@ -5,6 +5,8 @@ $(document).ready(function() {
   // set up the socket connection
   var socket = io();
   var player = {};
+  var allowShake = false;
+  var clickedAnswer;
   // toggleButtons();
   registerAnswerListener();
   $(".answer-select").hide()
@@ -24,6 +26,8 @@ $(document).ready(function() {
     $(".waiting").toggle();
     $("body").toggleClass("gameMode")
     updateMessage("Game started!");
+    disableButtons();
+    allowShake = true;
   })
 
   socket.on('next question', function(data) {
@@ -49,7 +53,8 @@ $(document).ready(function() {
   }
 
   function sendAnswer(answer) {
-    console.log("clicked")
+    clickedAnswer = $(answer.target);
+    clickedAnswer.addClass("selected");
     selectedAnswer.id = $(answer.target).data("question-id");
     selectedAnswer.player = player;
     disableButtons();
@@ -74,7 +79,10 @@ $(document).ready(function() {
   //function to call when shake occurs
   function shakeEventDidOccur () {
   	// message to server
-  	socket.emit('hit buzzer', player);  
+    if (allowShake) {
+      socket.emit('hit buzzer', player);
+      allowShake == false;
+    }
   }
 
   socket.on('turn alert', function(data) {
@@ -82,8 +90,10 @@ $(document).ready(function() {
     if (data.no != player.playerNo){
       updateMessage("Player " + data.no + " buzzed first!")
       disableButtons();
+      allowShake == false;
     } else {
       updateMessage("You buzzed first! Choose your answer")
+      enableButtons();
     }
   })
 
@@ -91,6 +101,11 @@ $(document).ready(function() {
     console.log(data);
     updateMessage("Next question")
     enableButtons();
+    if (clickedAnswer) {
+      clickedAnswer.removeClass("selected");
+    }
+    // console.log("trying to remove selectedClass from" + clickedAnswer)
+    allowShake == true;
   })
   
   function connectToGame(){
