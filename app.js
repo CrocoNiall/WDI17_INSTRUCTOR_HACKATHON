@@ -15,6 +15,7 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/buzz');
 
 var playerCount = 1
+var clients = {}
 
 io.on('connection', function(socket){
 
@@ -32,22 +33,27 @@ io.on('connection', function(socket){
       user: submittedAnswer.user,
       guessId: submittedAnswer.id
     };
-    // checkAnswer();
     io.emit('user guess', emitGuess)
   })
   	
-	socket.on('join game', function(user){
-    console.log('trying to connect to the game....')
-
+  socket.on('join game', function(user){
     io.emit('newUser', {id: socket.id, playerNo: playerCount, name: "Player " + playerCount});
-    playerCount++;
-	})
+
+    var recip = clients[socket.id]
+    socket.emit('setname', {name: 'Player' + playerCount, playerNo: playerCount})
+    playerCount++
+  })
   
-  function checkAnswer() {
-    // Fake answer
-  }
+
+  socket.on('resetGame', function(data){
+    console.log('Game has been reset.....')
+    playerCount = 1
+    clients = {}
+  })
 
 });
+
+
 
 
 // set the view engine to ejs
