@@ -80,7 +80,7 @@ $(document).ready(function() {
   socket.on('turn alert', function(data) {
     console.log('Someone has buzzed ' + data.name)
     if (data.no != player.playerNo){
-      updateMessage("Player " + player.playerNo + " buzzed first!")
+      updateMessage("Player " + data.no + " buzzed first!")
       disableButtons();
     } else {
       updateMessage("You buzzed first! Choose your answer")
