@@ -23,10 +23,11 @@ io.on('connection', function(socket){
   console.log('**********************User Connected' + socket.id)
 
   socket.on('hit buzzer', function(player){
-  	// console.log(user.name + " wants to answer");
     playerToAnswer = player;
-    var turnAlert = player.playerName + " has buzzed!"
+    var turnAlert = {name: player.playerName, no: player.playerNo}
     io.emit('turn alert', turnAlert);
+    console.log(player.playerName + '   buzzed!!!!!')
+
   })
 
   socket.on('answer submit', function(submittedAnswer){
@@ -41,10 +42,11 @@ io.on('connection', function(socket){
     }
   });
   	
-  socket.on('join game', function(){
+  socket.on('join game', function(user){
+    clients[socket.id] = socket
     io.emit('newUser', {id: socket.id, playerNo: playerCount, name: "Player " + playerCount});
     var recip = clients[socket.id]
-    socket.emit('setname', {name: 'Player' + playerCount, playerNo: playerCount})
+    recip.emit('setname', {name: 'Player' + playerCount, playerNo: playerCount})
     playerCount++
   })
 
@@ -54,10 +56,12 @@ io.on('connection', function(socket){
     clients = {}
   })
 
+  socket.on('startGame', function(){
+    console.log('The master is starting the game.....')
+    io.emit('masterStartGame', {})
+  })
+
 });
-
-
-
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');

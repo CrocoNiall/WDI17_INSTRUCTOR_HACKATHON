@@ -7,4 +7,4 @@
   <li ng-repeat='user in game.users track by $index'>{{user.name}} - {{user.id}}</li>
 </ul>
 
-<button ui-sref='questions'>START THE GAME</button>
+<button ng-click='game.startGame()' ui-sref='questions'>START THE GAME</button>

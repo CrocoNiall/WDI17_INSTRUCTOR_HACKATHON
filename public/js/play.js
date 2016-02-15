@@ -14,6 +14,12 @@ $(document).ready(function() {
     console.log('i am ' + player.playerName)
   })
 
+
+  socket.on('masterStartGame', function(data){
+    console.log('The master is starting the game....')
+    toggleButtons()
+  })
+
   function toggleButtons() {
     $(".answer-option").prop("disabled", function(index, currentValue) { 
       return !currentValue; 
@@ -28,7 +34,7 @@ $(document).ready(function() {
     // var answer;
     selectedAnswer.id = $(answer.target).data("question-id");
     selectedAnswer.player = player;
-    // toggleButtons();
+    toggleButtons();
     socket.emit('answer submit', selectedAnswer);
   }
   
@@ -52,13 +58,12 @@ $(document).ready(function() {
   	socket.emit('hit buzzer', player);  
   }
 
-  socket.on('turn alert', function(turnAlert) {
-    console.log(turnAlert)
-    // toggleButtons();
-  })
-
-  socket.on('disable buttons', function() {
-    toggleButtons();
+  socket.on('turn alert', function(data) {
+    console.log('Someone has buzzed ' + data.name)
+    if (data.no != player.playerNo){
+      console.log('toggeling buttons')
+      toggleButtons();
+    }
   })
   
   function connectToGame(){
