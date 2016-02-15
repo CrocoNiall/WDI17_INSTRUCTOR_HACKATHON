@@ -15,6 +15,7 @@
     "express-ejs-layouts": "^2.0.0",
     "http": "0.0.0",
     "mongoose": "^4.4.3",
+    "mongoose-random": "^0.1.1",
     "morgan": "^1.6.1",
     "socket.io": "^1.4.5"
   }

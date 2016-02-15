@@ -6,8 +6,8 @@ var Question = require('../models/question.js');
 // ***************SHOW ALL***************
 router.get('/questions', function(req,res){
 
-
-	Question.find({})
+	Question.findRandom()
+	.limit(5)
 	.populate('options')
 	.exec(function (err, data) {
   
