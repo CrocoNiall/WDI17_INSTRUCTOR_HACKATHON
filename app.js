@@ -12,19 +12,21 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var playerCount = 1
+var clients = {}
 
 io.on('connection', function(socket){
+  clients[socket.id] = socket
   console.log('**********************User Connected' + socket.id)
 
   socket.on('hit buzzer' , function(user){
           console.log(user.name + " wants to answer");
-
   })
 
   socket.on('join game', function(user){
-    console.log('trying to connect to the game....')
-
     io.emit('newUser', {id: socket.id, playerNo: playerCount, name: "Player " + playerCount});
+
+    var recip = clients[socket.id]
+    socket.emit('setname', {name: 'Player' + playerCount, playerNo: playerCount})
     playerCount++
   })
   

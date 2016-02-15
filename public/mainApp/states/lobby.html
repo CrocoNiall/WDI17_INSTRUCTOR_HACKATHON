@@ -3,6 +3,8 @@
 <h1>www.PlayWithMy.wang/play</h1>
 
 <h2>Here are all the people in the lobby.... </h2>
+
+<h3>There are {{game.users.length}} people in the game lobby.</h3>
 <ul>
   <li ng-repeat='user in game.users track by $index'>{{user.name}} - {{user.id}}</li>
 </ul>

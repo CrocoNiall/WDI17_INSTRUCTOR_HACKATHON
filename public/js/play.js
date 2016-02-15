@@ -5,6 +5,8 @@ $(document).ready(function() {
   var user = {
   	name:"steve"
   }
+  var playerName
+  var playerNo
 
   // set up the shake listener
   var myShakeEvent = new Shake({
@@ -16,6 +18,12 @@ $(document).ready(function() {
   var socket = io();
 
   connectToGame()
+
+  socket.on('setname', function(data){
+    playerName = data.name
+    playerNo = data.playerNo
+    console.log('i am ' + playerName)
+  })
 
 
 
