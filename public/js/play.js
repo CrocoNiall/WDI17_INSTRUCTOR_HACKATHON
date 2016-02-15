@@ -5,7 +5,7 @@ $(document).ready(function() {
   // set up the socket connection
   var socket = io();
   var player = {};
-  toggleButtons();
+  // toggleButtons();
   registerAnswerListener();
 
   socket.on('setname', function(data){
@@ -17,7 +17,7 @@ $(document).ready(function() {
 
   socket.on('masterStartGame', function(data){
     console.log('The master is starting the game....')
-    toggleButtons()
+    // toggleButtons()
   })
 
   function toggleButtons() {
