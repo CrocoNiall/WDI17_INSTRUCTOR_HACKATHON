@@ -7,17 +7,23 @@ $(document).ready(function() {
   var player = {};
   // toggleButtons();
   registerAnswerListener();
+  $(".answer-select").hide()
+  $(".playerName").hide()
 
   socket.on('setname', function(data){
     player.playerName = data.name
     player.playerNo = data.playerNo
     console.log('i am ' + player.playerName)
+    $(".playerName").text("You are Player " + player.playerNo)
   })
 
 
   socket.on('masterStartGame', function(data){
     console.log('The master is starting the game....')
-    // toggleButtons()
+    $(".playerName").toggle();
+    $(".answer-select").toggle();
+    $(".waiting").toggle();
+    $("body").toggleClass("gameMode")
   })
 
   function toggleButtons() {
