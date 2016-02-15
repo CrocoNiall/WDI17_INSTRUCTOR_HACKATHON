@@ -10,11 +10,10 @@ function gameController($scope){
   self.users = [] 
 
   var socket  = io()
-
+  self.startGame = startGame
   socket.on('connect', function(){
     console.log('im connected')
   })
-
 
   socket.on('newUser', function(data){
     console.log('..............new user..............')
@@ -22,6 +21,12 @@ function gameController($scope){
     console.log(self.users)
     $scope.$apply()
   })
+
+
+  function startGame(){
+    socket.emit('startGame', {})
+  }
+
 
 
 }
