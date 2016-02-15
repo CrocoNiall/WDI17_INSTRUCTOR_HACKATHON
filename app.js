@@ -2,40 +2,39 @@ var express     = require('express');
 var app         = express();
 var port        = process.env.PORT || 3000;
 var router      = express.Router();
-var routes      = require('./routes/routes')
-var http        = require('http').createServer(app)
-var bodyParser  = require('body-parser')
-var morgan      = require('morgan')
+var http        = require('http').Server(app);
 
-var ejs         = require('ejs')
-var io          = require('socket.io')(http)
+var routes     = require('./routes/routes');
+
+var bodyParser  = require('body-parser');
+var morgan      = require('morgan');
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+
+  socket.on('hit buzzer' , function(user){
+
+          console.log(user.name + " wants to answer");
+
+  })
+
+});
+
+
+// set the view engine to ejs
+app.set('view engine', 'ejs');
 
 app.use(morgan('dev'))
-
-//set out view engine
-app.set('view engine', 'ejs')
-app.set('views', './views')
-
-app.use(express.static(__dirname + '/public'))
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:false }))
 
-app.use(router)
-app.use('/',  routes)
+app.use(router);
+app.use('/',  routes);
 
+app.use(express.static(__dirname + '/public'));
 
-io.on('connection', function(socket){
-  console.log('someone has connected')
-
-  socket.on('joinGame', function(data){
-    console.log(msg)
-  })
-  
-})
-
-
-
-
-app.listen(port)
-console.log('Server started on port ' + port + '...')
+http.listen(port)
+console.log('Server started on port ' + port + '…')

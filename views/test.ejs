@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Accelerometer Test</title>
+	<script src="/bower_components/shake.js/shake.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+</head>
+<body>
+	<h1>Test</h1>
+	
+	<p id="acc">
+		
+	</p>
+
+	<script>
+
+		// user object TBC
+		var user = {
+			"name":"steve"
+		}
+
+		// set up the shake listener
+		var myShakeEvent = new Shake({
+		    threshold: 15, // optional shake strength threshold
+		    timeout: 1000 // optional, determines the frequency of event generation
+		});
+
+		// set up the socket connection
+		var socket = io();
+
+		// start listening for shakes
+		myShakeEvent.start();
+
+		// listen on the window too (just how it works)
+		window.addEventListener('shake', shakeEventDidOccur, false);
+
+		//function to call when shake occurs
+		function shakeEventDidOccur () {
+
+			// message to server
+			socket.emit('hit buzzer' , user);
+		    
+		}
+
+
+
+	</script>
+</body>
+</html>
