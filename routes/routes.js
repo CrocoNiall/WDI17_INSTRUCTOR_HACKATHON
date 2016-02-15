@@ -1,12 +1,12 @@
 var express = require('express');
-var candies = express.Router();
+var router = express.Router();
 
 // ***************SHOW ALL***************
-candies.get('/', function(req,res){
+router.get('/', function(req,res){
  res.json('Hello Niall')
 })
 
 
 
 
-module.exports = candies
+module.exports = router
