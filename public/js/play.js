@@ -13,6 +13,10 @@ $(document).ready(function() {
     console.log('i am ' + playerName)
   })
 
+  socket.on('masterStartGame', function(data){
+    console.log('The master is starting the game....')
+  })
+
   function toggleButtons() {
     $(".answer-option").prop("disabled", function(index, currentValue) { 
       return !currentValue; 

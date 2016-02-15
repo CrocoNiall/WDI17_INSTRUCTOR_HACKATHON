@@ -51,6 +51,11 @@ io.on('connection', function(socket){
     clients = {}
   })
 
+  socket.on('startGame', function(){
+    console.log('The master is starting the game.....')
+    io.emit('masterStartGame', {})
+  })
+
 });
 
 
