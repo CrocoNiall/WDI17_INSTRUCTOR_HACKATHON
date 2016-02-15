@@ -1,5 +1,14 @@
 $(document).ready(function() {
-  
+  //configure sound manager
+   soundManager.setup({
+    url: 'swf/',
+    flashVersion: 9,
+    preferFlash: false,
+    onready: function() {
+      console.log('sound manager ready...')
+    }
+  }); 
+
   // Init stuff
   var selectedAnswer = {};
   // set up the socket connection
@@ -17,6 +26,7 @@ $(document).ready(function() {
     player.playerNo = data.playerNo
     console.log('i am ' + player.playerName)
     $(".playerName").text("You are Player " + player.playerNo)
+    // setTimeout(function(){ responsiveVoice.speak('You are player ' + player.playerNo, "US English Female",  {rate: 1}); }, 1000)
   })
 
   socket.on('masterStartGame', function(data){
@@ -85,15 +95,17 @@ $(document).ready(function() {
     }
   }
 
+
   socket.on('turn alert', function(data) {
     console.log('Someone has buzzed ' + data.name)
-    if (data.no != player.playerNo){
-      updateMessage("Player " + data.no + " buzzed first!")
+    if (data.no != player.playerNo) {
+      updateMessage("Player " + data.no + " buzzed first!");
       disableButtons();
       allowShake == false;
     } else {
-      updateMessage("You buzzed first! Choose your answer")
+      updateMessage("You buzzed first! Choose your answer");
       enableButtons();
+      playSound('buzz.mp3');
     }
   })
 
@@ -111,5 +123,13 @@ $(document).ready(function() {
   function connectToGame(){
     console.log('joining game....')
     socket.emit('join game')
+  }
+
+
+  function playSound(filename) {
+    var sound = soundManager.createSound({
+      url: 'sounds/' + filename
+    });
+    sound.play();
   }
 })

@@ -12,7 +12,7 @@ var morgan      = require('morgan')
 var io = require('socket.io')(http);
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/buzz');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/buzz');
 
 var playerCount = 1
 var clients = {}
@@ -27,6 +27,7 @@ io.on('connection', function(socket){
     var turnAlert = {name: player.playerName, no: player.playerNo}
     io.emit('turn alert', turnAlert);
     console.log(player.playerName + '   buzzed!!!!!')
+    
 
   })
 

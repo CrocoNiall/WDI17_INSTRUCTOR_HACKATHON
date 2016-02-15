@@ -20,6 +20,7 @@ function lobbyController($scope , Game){
     user.score = 0;
     Game.newPlayer(user);
     $scope.$apply();
+    
 
   })
 
