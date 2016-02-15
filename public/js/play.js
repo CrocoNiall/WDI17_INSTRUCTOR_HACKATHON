@@ -91,7 +91,7 @@ $(document).ready(function() {
   	// message to server
     if (allowShake) {
       socket.emit('hit buzzer', player);
-      allowShake == false;
+      allowShake = false;
     }
   }
 
@@ -101,7 +101,6 @@ $(document).ready(function() {
     if (data.no != player.playerNo) {
       updateMessage("Player " + data.no + " buzzed first!");
       disableButtons();
-      allowShake == false;
     } else {
       updateMessage("You buzzed first! Choose your answer");
       enableButtons();
