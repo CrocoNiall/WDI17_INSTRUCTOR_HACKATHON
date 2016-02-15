@@ -1,7 +1,7 @@
 angular.module('game').controller('questionController', QuestionController);
 
-QuestionController.$inject = ['$scope', '$state' , '$timeout', 'Question'];
-function QuestionController($scope, $state, $timeout, Question) {
+QuestionController.$inject = ['$scope', '$state' , '$timeout', 'Question' , 'Game'];
+function QuestionController($scope, $state, $timeout, Question, Game) {
 	 soundManager.setup({
     url: 'swf/',
     flashVersion: 9,
@@ -29,19 +29,30 @@ function QuestionController($scope, $state, $timeout, Question) {
 	var socket  = io()
 
 	socket.on('turn alert', function(data){
-	  
+	  if(!self.playerBuzzed) {
 	  	self.playerBuzzed = data;
+	  	console.log(self.playerBuzzed);
 	  	$scope.$apply();
-
+	  }
 	});
 
 	socket.on('user guess', function(data){
 	  
+	  	// only the user who buzzed in can answer
+	  	if(data.user.playerNo != self.playerBuzzed.no) {
+	  		console.log(data.user.playerNo , self.playerBuzzed.no);
+	  		return;
+	  	}
+
 	  	// set the guess index
 	  	self.guess = data.guessId -1;
 
 	  	// check for correct answer
 	  	self.correct = self.question.options[self.guess].isCorrect;
+	  	
+	  	// update the score
+	  	Game.updateScore(self.playerBuzzed.no , self.correct);
+
 	  	if (self.correct){
 	  		  playSound('correct.mp3')
 	  		  $timeout(responsiveVoice.speak('That is correct.', "US English Female",  {rate: 1}) , 500)
@@ -50,8 +61,6 @@ function QuestionController($scope, $state, $timeout, Question) {
 	  		  $timeout(responsiveVoice.speak('Im sorry, that was the wrong answer.', "US English Female",  {rate: 1}), 500)
 
 	  	}
-
-	  	// console.log(self.question.options[self.guess]);
 
 	  	// update the angular watcher
 	  	$scope.$apply();
@@ -67,7 +76,7 @@ function QuestionController($scope, $state, $timeout, Question) {
 		self.guess = null;
 		self.playerBuzzed = null;
 
-		if(self.current < self.questions.length) {
+		if(self.current < self.questions.length - 1) {
 
 			self.current++;
 			self.question = self.questions[self.current];
@@ -90,13 +99,13 @@ function QuestionController($scope, $state, $timeout, Question) {
   function speak(){
 
   	//convert question to readable string. 
-  	var speechString = self.question.question 
+  	var speechString = self.question.question;
   	speechString += '. was it,'
     speechString += self.question.options[0].title 
     speechString += ','
     speechString += self.question.options[1].title 
     speechString += ','
-    speechString += self.question.options[3].title 
+    speechString += self.question.options[2].title 
     speechString += ', or was it '
     speechString += self.question.options[3].title
 
