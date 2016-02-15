@@ -4,13 +4,14 @@ $(document).ready(function() {
   var selectedAnswer = {};
   // set up the socket connection
   var socket = io();
+  var player = {};
   toggleButtons();
   registerAnswerListener();
 
   socket.on('setname', function(data){
-    playerName = data.name
-    playerNo = data.playerNo
-    console.log('i am ' + playerName)
+    player.playerName = data.name
+    player.playerNo = data.playerNo
+    console.log('i am ' + player.playerName)
   })
 
   function toggleButtons() {
@@ -26,20 +27,15 @@ $(document).ready(function() {
   function sendAnswer(answer) {
     // var answer;
     selectedAnswer.id = $(answer.target).data("question-id");
-    selectedAnswer.user = user.name;
+    selectedAnswer.player = player;
     toggleButtons();
     socket.emit('answer submit', selectedAnswer);
   }
   
-  // user object TBC
-  var user = {
-  	name:"steve"
-  }
-
   // set up the shake listener
   var myShakeEvent = new Shake({
-      threshold: 15, // optional shake strength threshold
-      timeout: 1000 // optional, determines the frequency of event generation
+    threshold: 15, // optional shake strength threshold
+    timeout: 1000 // optional, determines the frequency of event generation
   });
 
   connectToGame();
@@ -53,7 +49,7 @@ $(document).ready(function() {
   //function to call when shake occurs
   function shakeEventDidOccur () {
   	// message to server
-  	socket.emit('hit buzzer', user);  
+  	socket.emit('hit buzzer', player);  
   }
 
   socket.on('turn alert', function(turnAlert) {
@@ -63,6 +59,6 @@ $(document).ready(function() {
   
   function connectToGame(){
     console.log('joining game....')
-    socket.emit('join game', user)
+    socket.emit('join game')
   }
 })

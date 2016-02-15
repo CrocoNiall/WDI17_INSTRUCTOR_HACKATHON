@@ -16,27 +16,31 @@ mongoose.connect('mongodb://localhost/buzz');
 
 var playerCount = 1
 var clients = {}
+var playerToAnswer;
 
 io.on('connection', function(socket){
 
   console.log('**********************User Connected' + socket.id)
 
-  socket.on('hit buzzer', function(user){
+  socket.on('hit buzzer', function(player){
   	// console.log(user.name + " wants to answer");
-    var turnAlert = user.name + " has buzzed!"
+    playerToAnswer = player;
+    var turnAlert = player.playerName + " has buzzed!"
     io.emit('turn alert', turnAlert);
   })
 
   socket.on('answer submit', function(submittedAnswer){
-    console.log(submittedAnswer);
-    var emitGuess = {
-      user: submittedAnswer.user,
-      guessId: submittedAnswer.id
-    };
-    io.emit('user guess', emitGuess)
-  })
+    if (submittedAnswer.player.playerNo === playerToAnswer.playerNo) {
+      var emitGuess = {
+        user: submittedAnswer.player,
+        guessId: submittedAnswer.id
+      }
+      console.log(emitGuess);
+      io.emit('user guess', emitGuess)
+    }
+  });
   	
-  socket.on('join game', function(user){
+  socket.on('join game', function(){
     io.emit('newUser', {id: socket.id, playerNo: playerCount, name: "Player " + playerCount});
     var recip = clients[socket.id]
     socket.emit('setname', {name: 'Player' + playerCount, playerNo: playerCount})
