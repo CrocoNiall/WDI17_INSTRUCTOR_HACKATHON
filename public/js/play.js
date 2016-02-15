@@ -31,7 +31,6 @@ $(document).ready(function() {
   }
 
   function sendAnswer(answer) {
-    // var answer;
     console.log("clicked")
     selectedAnswer.id = $(answer.target).data("question-id");
     selectedAnswer.player = player;
