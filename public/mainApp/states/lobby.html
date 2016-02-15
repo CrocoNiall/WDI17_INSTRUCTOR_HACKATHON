@@ -1,10 +1,12 @@
-<h1>Lobby</h1>
-
-<h1>www.PlayWithMy.wang/play</h1>
-
-<h2>Here are all the people in the lobby.... </h2>
-<ul>
-  <li ng-repeat='user in game.users track by $index'>{{user.name}} - {{user.id}}</li>
-</ul>
-
-<button ng-click='game.startGame()' ui-sref='questions'>START THE GAME</button>
+<div id="lobby">
+	<div class="row vertical-center">
+	  	<div class="col-xs-12 text-center">
+			<h1>Waiting for playaaas</h1>
+			<button class="button" ng-click='game.startGame()' ui-sref='questions'>START THE GAME</button>
+			<ul>
+			  <li ng-repeat='user in game.users track by $index'>
+			  <i class="fa fa-user"></i> {{user.name}} has joined</li>
+			</ul>
+		</div>
+	</div>
+</div>
