@@ -14,7 +14,7 @@ var io = require('socket.io')(http);
 io.on('connection', function(socket){
   console.log('a user connected');
 
-  socket.on('hit_buzzer' , function(user){
+  socket.on('hit buzzer' , function(user){
 
   		console.log(user.name + " wants to answer");
 
