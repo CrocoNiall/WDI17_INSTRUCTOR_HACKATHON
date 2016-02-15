@@ -7,6 +7,12 @@ $(document).ready(function() {
   toggleButtons();
   registerAnswerListener();
 
+  socket.on('setname', function(data){
+    playerName = data.name
+    playerNo = data.playerNo
+    console.log('i am ' + playerName)
+  })
+
   function toggleButtons() {
     $(".answer-option").prop("disabled", function(index, currentValue) { 
       return !currentValue; 
