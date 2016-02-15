@@ -7,6 +7,11 @@ router.get('/', function(req,res){
 })
 
 
+router.get('/startgame', function(req,res){
+ res.render('mainApp/index.ejs')
+})
+
+
 
 
 module.exports = router
