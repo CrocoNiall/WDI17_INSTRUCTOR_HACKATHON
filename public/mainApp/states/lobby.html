@@ -1,5 +1,5 @@
-<div id="lobby" ng-controller="lobbyController as lobby">
-	<div class="row vertical-center">
+<div id="lobby" ng-controller="lobbyController as lobby" >
+	<div class="row vertical-center" ng-init='lobby.resetGame'>
 	  	<div class="col-xs-12 text-center">
 			<h1>Waiting for playaaas</h1>
 			<button class="button" ng-click='lobby.startGame()' ui-sref='questions'>START THE GAME</button>

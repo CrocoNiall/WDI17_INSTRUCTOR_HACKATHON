@@ -10,6 +10,7 @@ function lobbyController($scope , Game){
 
   var socket  = io();
   self.startGame = startGame
+  self.resetGame = resetGame
 
   socket.on('connect', function(){
     console.log('im connected');
@@ -20,13 +21,13 @@ function lobbyController($scope , Game){
     user.score = 0;
     Game.newPlayer(user);
     $scope.$apply();
-    
-
   })
-
 
   function startGame(){
     socket.emit('startGame', {})
+  }
+  function resetGame(){
+    socket.emit('resetGame', {})
   }
 
 
