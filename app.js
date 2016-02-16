@@ -29,7 +29,13 @@ io.on('connection', function(socket){
     console.log(player.playerName + '   buzzed!!!!!')
     
 
-  })
+  });
+
+  socket.on('turn winner' , function(data){
+
+    io.emit('turn winner' , data);
+
+  });
 
   socket.on('answer submit', function(submittedAnswer){
     console.log(submittedAnswer)
@@ -38,7 +44,7 @@ io.on('connection', function(socket){
         user: submittedAnswer.player,
         guessId: submittedAnswer.id
       }
-      console.log(emitGuess);
+      
       io.emit('user guess', emitGuess)
     }
   });

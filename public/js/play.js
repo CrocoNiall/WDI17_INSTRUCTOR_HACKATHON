@@ -14,7 +14,7 @@ $(document).ready(function() {
   // set up the socket connection
   var socket = io();
   var player = {};
-  var allowShake = false;
+  var allowAnswer = true;
   var clickedAnswer;
   // toggleButtons();
   registerAnswerListener();
@@ -89,15 +89,20 @@ $(document).ready(function() {
   //function to call when shake occurs
   function shakeEventDidOccur () {
   	// message to server
-    if (allowShake) {
+    if (allowAnswer) {
       socket.emit('hit buzzer', player);
-      allowShake = false;
     }
   }
 
 
-  socket.on('turn alert', function(data) {
+  socket.on('turn winner', function(data) {
     console.log('Someone has buzzed ' + data.name)
+    
+    if(!allowAnswer)
+      return;
+
+    allowAnswer = false;
+    console.log(data.no , player.playerNo);
     if (data.no != player.playerNo) {
       updateMessage("Player " + data.no + " buzzed first!");
       disableButtons();
@@ -110,13 +115,13 @@ $(document).ready(function() {
 
   socket.on('reset turn', function(data) {
     console.log(data);
+    allowAnswer = true;
     updateMessage("Next question")
     enableButtons();
     if (clickedAnswer) {
       clickedAnswer.removeClass("selected");
     }
-    // console.log("trying to remove selectedClass from" + clickedAnswer)
-    allowShake = true;
+
   })
   
   function connectToGame(){

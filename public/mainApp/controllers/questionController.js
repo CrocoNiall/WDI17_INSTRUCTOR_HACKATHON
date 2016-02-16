@@ -30,12 +30,12 @@ function QuestionController($scope, $state, $timeout, Question, Game) {
 
 	socket.on('turn alert', function(data){
 
-	  	responsiveVoice.speak('Player ' + data.no, "US English Female",  {rate: 1})
-
+	  //responsiveVoice.speak('Player ' + data.no, "US English Female",  {rate: 1})
+	  console.log(self.playerBuzzed);
 	  if(!self.playerBuzzed) {
 	  	self.playerBuzzed = data;
-	  	console.log(self.playerBuzzed);
 	  	$scope.$apply();
+	  	socket.emit('turn winner' , data);
 	  }
 	});
 
