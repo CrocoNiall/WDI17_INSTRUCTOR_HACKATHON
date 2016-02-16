@@ -15,15 +15,31 @@ body {
   margin: 5px 0;
 }
 
-button {
-  border: 10px solid white;
-  border-radius: 3px;
+.button-container {
+  display: inline-block;
   width: 48%;
-  height: 48%; 
+  height: 48%;
+  background: white;
 }
 
-.message, .playerName, button {
+button {
+  width: 90%;
+  height: 90%;
+  border: 10px solid white;
+  border-radius: 3px;
+  background: white;
+  font-size: 3em;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.message, .playerName {
   color: white;
 }
 
+.selected {
+  border-color: blue;
+}
 
+/* Comment to push */
